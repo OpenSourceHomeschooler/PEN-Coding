@@ -3,8 +3,8 @@ import random
 
 random.seed()
 
-randX = random.randrange(1, 6)
-randY = random.randrange(1, 6)
+randX = 0
+randY = 0
 
 fred = turtle.Turtle()
 wn = turtle.Screen()
@@ -12,12 +12,27 @@ wn = turtle.Screen()
 step = 50
 steps = step
 
+def reset():
+	global randX, randY
+	randX = random.randrange(1, 6)
+	randY = random.randrange(1, 6)
+	fred.clear()
+	fred.up()
+	travelto(randX, randY)
+	fred.down()
+	fred.dot()
+	fred.up()
+	travelto(0, 0)
+	fred.down()
+
+
 def up():
 	fred.left(90)
 	fred.forward(steps)
 	fred.left(-90)
 	if fred.xcor() == (randX * step) and fred.ycor() == (randY * step):
 		print "Success!"
+		reset()
 
 def down():
 	fred.right(90)
@@ -25,16 +40,19 @@ def down():
 	fred.right(-90)
 	if fred.xcor() == (randX * step) and fred.ycor() == (randY * step):
 		print "Success!"
+		reset()
 
 def left():
 	fred.backward(steps)
 	if fred.xcor() == (randX * step) and fred.ycor() == (randY * step):
 		print "Success!"
+		reset()
 
 def right():
 	fred.forward(steps)
 	if fred.xcor() == (randX * step) and fred.ycor() == (randY * step):
 		print "Success!"
+		reset()
 	
 def travelto(Xsteps, Ysteps):
 	fred.goto(Xsteps*step, Ysteps*step)
@@ -42,19 +60,7 @@ def travelto(Xsteps, Ysteps):
 def dot():
 	fred.dot()
 
-fred.up()
-
-travelto(randX, randY)
-
-fred.down()
-
-fred.dot()
-
-fred.up()
-
-travelto(0, 0)
-
-fred.down()
+reset()
 
 # These lines "wire up" keypresses to the handlers we've defined.
 wn.onkey(up, "Up")
